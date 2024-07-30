@@ -1,0 +1,40 @@
+NUMBER : /[1-9][0-9]*/;
+ASTERISK : '*';
+MINUS : '-';
+PLUS : '+';
+SLASH : '/';
+LPAREN : '(';
+RPAREN : ')';
+
+exprStart [double value]
+	: e {$value = $e;}
+	| NONE {$value = 0;}
+	;
+
+e [double value]
+	: t esup({$t}) {$value = $esup;}
+	| NONE {$value = 0;}
+	;
+
+esup (double a) [double value]
+	: PLUS t esup({$a + $t}) {$value = $esup;}
+	| MINUS t esup({$a - $t}) {$value = $esup;}
+	| NONE {$value = $a;}
+	;
+
+t [double value]
+	: f tsup({$f}) {$value = $tsup;}
+	| NONE {$value = 0;}
+	;
+
+tsup (double a) [double value]
+	: ASTERISK f tsup({$a * $f}) {$value = $tsup;}
+	| SLASH f tsup({$a / $f}) {$value = $tsup;}
+	| NONE {$value = $a;}
+	;
+
+f [double value]
+	: LPAREN e RPAREN {$value = $e;}
+	| {$value = Integer.parseInt($la.curString.toString());} NUMBER
+	;
+

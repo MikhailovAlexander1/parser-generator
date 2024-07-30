@@ -1,0 +1,5 @@
+digraph {
+0 [label="e"]
+1 [label="ε",color=red]
+0 -> 1
+}

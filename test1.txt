@@ -1,0 +1,45 @@
+NAME : 'a';
+VAR : 'v';
+ASTERISK : '*';
+MINUS : '-';
+PLUS : '+';
+COMMA : ',';
+LP : '(';
+RP : ')';
+COLON : ':';
+SEMICOLON : ';';
+
+e
+	: v COLON a SEMICOLON
+	| NONE
+	;
+
+v
+	: VAR NAME
+	;
+
+a
+	: t at
+	;
+
+at
+	: LP tt atcont RP
+	;
+
+atcont
+	: COMMA tt atcont
+	| NONE
+	;
+
+tt
+	: t ttt
+	;
+
+ttt
+	: at
+	| NONE
+	;
+
+t
+	: NAME
+	;
